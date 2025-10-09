@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-type UseBannerOptions = {
+interface UseBannerOptions {
   duration?: number
 }
 

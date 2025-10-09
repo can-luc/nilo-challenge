@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Button } from 'src/components/ui/button'
+
 import EyeEmptyIcon from 'src/components/icons/eye-empty'
+import { Button } from 'src/components/ui/button'
 
 interface ErrorStateProps {
   title?: string

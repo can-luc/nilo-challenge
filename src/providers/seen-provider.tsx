@@ -1,31 +1,24 @@
 'use client'
 import React, {
   createContext,
-  useContext,
   useEffect,
   ReactNode,
   useReducer,
   useState,
 } from 'react'
-import { seenReducer, SeenState } from './reducer'
-import { SeenPokemon } from './entity'
 
-type SeenContextType = {
-  seenList: SeenPokemon[]
-  lastAdded?: SeenPokemon | null
-  addSeen: (pokemon: SeenPokemon) => void
-  clearSeen: () => void
-  removeSeen: (id: string) => void
-  clearLastAdded: () => void
-}
+import { SeenContextType } from 'src/state/types'
+import { Pokemon } from 'src/types/pokemon'
 
-const SeenContext = createContext<SeenContextType | undefined>(undefined)
+import { seenReducer, SeenState } from '../state/reducer'
+
+export const SeenContext = createContext<SeenContextType | undefined>(undefined)
 
 export function SeenProvider({ children }: { children: ReactNode }) {
   const [isClient, setIsClient] = useState(false)
 
   const [state, dispatch] = useReducer(seenReducer, {
-    seenList: [],
+    data: [],
     lastAdded: null,
   } as SeenState)
 
@@ -33,7 +26,10 @@ export function SeenProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem('seenList')
     if (stored) {
-      dispatch({ type: 'INIT', payload: JSON.parse(stored) })
+      dispatch({
+        type: 'INIT',
+        payload: JSON.parse(stored),
+      })
     }
     setIsClient(true)
   }, [])
@@ -41,12 +37,12 @@ export function SeenProvider({ children }: { children: ReactNode }) {
   // Guarda en localStorage cuando seenList cambia (solo en cliente)
   useEffect(() => {
     if (isClient) {
-      localStorage.setItem('seenList', JSON.stringify(state.seenList))
+      localStorage.setItem('seenList', JSON.stringify(state.data))
     }
-  }, [state.seenList, isClient])
+  }, [state.data, isClient])
 
-  const addSeen = (pokemon: SeenPokemon) =>
-    dispatch({ type: 'ADD', payload: pokemon })
+  const addSeen = (pokemon: Pokemon) =>
+    dispatch({ type: 'ADD', payload: { data: pokemon } })
   const removeSeen = (id: string) => dispatch({ type: 'REMOVE', payload: id })
   const clearSeen = () => dispatch({ type: 'CLEAR' })
   const clearLastAdded = () => dispatch({ type: 'CLEAR_LAST_ADDED' })
@@ -56,7 +52,7 @@ export function SeenProvider({ children }: { children: ReactNode }) {
   return (
     <SeenContext.Provider
       value={{
-        seenList: state.seenList,
+        seenList: state.data,
         addSeen,
         clearSeen,
         removeSeen,
@@ -67,10 +63,4 @@ export function SeenProvider({ children }: { children: ReactNode }) {
       {children}
     </SeenContext.Provider>
   )
-}
-
-export function useSeen() {
-  const context = useContext(SeenContext)
-  if (!context) throw new Error('useSeen must be used within SeenProvider')
-  return context
 }

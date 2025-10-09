@@ -1,17 +1,8 @@
-import { apolloServerClient } from 'src/lib/apollo-server-client'
-import { GET_ALL_POKEMON } from 'src/graphql/queries'
-
 import ContainerHome from 'src/features/home/ui/container-home'
+import { getInitialPokemons } from 'src/features/home/use-cases/get-initial-pokemons'
 
-const OFFSET = 93
-const TAKE = 10
-
-export default async function PageHome() {
-  const { data } = await apolloServerClient.query({
-    query: GET_ALL_POKEMON,
-    variables: { offset: OFFSET, take: TAKE },
-  })
-  const initialData = data?.getAllPokemon ?? []
+export default async function Home() {
+  const initialData = await getInitialPokemons()
   return (
     <>
       <ContainerHome initialData={initialData} />

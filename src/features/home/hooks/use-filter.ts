@@ -7,10 +7,10 @@ import { useMemo } from 'react'
  * @param field Campo del objeto donde se realizará la búsqueda (por defecto 'species').
  * @returns Lista filtrada de objetos que coinciden con el término de búsqueda.
  */
-export function useFilter<T extends { [key: string]: any }>(
+export function useFilter<T extends Object>(
   list: T[],
   search: string,
-  field: keyof T = 'species',
+  field: keyof T,
 ): T[] {
   return useMemo(() => {
     if (!search) return list

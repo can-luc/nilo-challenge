@@ -1,10 +1,12 @@
 import React from 'react'
-import Navbar from 'src/components/layout/navbar'
+
 import { Poppins } from 'next/font/google'
 
+import Navbar from 'src/components/layout/navbar'
+
 import '../styles/globals.css'
-import { SeenProvider } from 'src/context/seen-context'
-import ApolloWrapper from 'src/context/apollo/apollo-provider'
+import ApolloWrapper from 'src/providers/apollo-provider'
+import { SeenProvider } from 'src/providers/seen-provider'
 
 export const metadata = {
   title: 'Pokemon App',
@@ -17,11 +19,10 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode
-}) {
+}
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
       <body className="min-h-screen bg-body-background">

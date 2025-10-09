@@ -39,7 +39,7 @@ export default {
         },
       },
       boxShadow: {
-        navbar: '0 4px 4px 0 rgba(15, 23, 42, 0.08)', 
+        navbar: '0 4px 4px 0 rgba(15, 23, 42, 0.08)',
       },
     },
     screens: {
@@ -48,4 +48,4 @@ export default {
     },
   },
   plugins: [],
-};
+}

@@ -19,7 +19,7 @@ export default function Progress({ label, value }: ProgressProps) {
           <div
             className="h-1.5 rounded-full bg-card-progress-bar transition-all duration-300"
             style={{ width: `${value}%` }}
-          ></div>
+          />
         </div>
       )}
     </div>

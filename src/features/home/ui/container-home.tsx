@@ -1,26 +1,31 @@
 'use client'
 import React from 'react'
-// Components shared
+
 import Hero from 'src/components/shared/hero/hero'
 
-// Components feature
+import ErrorState from 'src/components/error-state'
+import SkeletonCard from 'src/components/skeletons/card'
+
+import { useSeen } from 'src/state/use-seen'
+import { Pokemon } from 'src/types/pokemon'
+
+import CardGrid from '../../../components/shared/card/ui/card-grid'
+import { useBanner } from '../hooks/use-banner'
+import { useDebouncedFilter } from '../hooks/use-debounced-filter'
+import { useFetchMore } from '../states/use-fetch-more'
+import { PokemonsList } from '../types/pokemons-list'
+
+import Banner from './banner'
 import Search from './search'
 import SearchInfo from './search-info'
-import CardGrid from './card-grid'
-import Banner from './banner'
-
-// Hooks
-import { useDebouncedFilter } from '../hooks/use-debounced-filter'
-import { useBanner } from '../hooks/use-banner'
-import { useFetchMore } from '../hooks/use-fetch-more'
-
-// Context
-import { useSeen } from 'src/context/seen-context'
-import SkeletonCard from 'src/components/skeletons/card'
 
 const DURATION_BANNER = 2000
 
-export default function ContainerHome({ initialData }: { initialData: any }) {
+interface ContainerHomeProps {
+  initialData: PokemonsList
+}
+
+export default function ContainerHome({ initialData }: ContainerHomeProps) {
   const [searchInput, setSearchInput] = React.useState('')
   const { seenList, lastAdded, clearLastAdded } = useSeen()
 
@@ -31,11 +36,19 @@ export default function ContainerHome({ initialData }: { initialData: any }) {
   // Infinite scroll hook
   const { pokemons, loadingMore, hasMore, ref } = useFetchMore(initialData)
 
-  const { filtered, isTyping } = useDebouncedFilter(
+  const { filtered, isTyping } = useDebouncedFilter<Pokemon>(
     pokemons,
     searchInput,
     'species',
   )
+
+  const NOT_FOUND_POKEMONS = 0
+
+  const countPokemons = filtered.length
+
+  if (countPokemons === NOT_FOUND_POKEMONS) {
+    return <ErrorState title={'There are no Pokémons to SEE'} isEmpty={false} />
+  }
 
   return (
     <>
@@ -58,7 +71,10 @@ export default function ContainerHome({ initialData }: { initialData: any }) {
       {isTyping ? (
         <SkeletonCard />
       ) : (
-        <CardGrid filteredPokemons={filtered} seenList={seenList} />
+        <CardGrid
+          pokemons={filtered as unknown as Pokemon[]}
+          seenList={seenList}
+        />
       )}
       {hasMore && (
         <div

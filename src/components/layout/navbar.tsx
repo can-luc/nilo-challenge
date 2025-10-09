@@ -1,14 +1,12 @@
 'use client'
-// Libraries
+
 import Link from 'next/link'
-
-// Components
-import { Button } from '../ui/button'
-import EyeNavbarIcon from '../icons/eye-navbar'
-
-// Context
-import { useSeen } from 'src/context/seen-context'
 import { usePathname } from 'next/navigation'
+
+import { useSeen } from 'src/state/use-seen'
+
+import EyeNavbarIcon from '../icons/eye-navbar'
+import { Button } from '../ui/button'
 
 export default function Navbar() {
   const { seenList } = useSeen()

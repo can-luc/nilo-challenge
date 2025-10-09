@@ -1,17 +1,18 @@
-import { useSeen } from 'src/context/seen-context'
 import { useCallback } from 'react'
-import { CardProps } from '../entity'
+
+import { useSeen } from 'src/state/use-seen'
+
+import { CardProps } from '../ui/card'
 
 export function useCardToggle({
   id,
   species,
   num,
-  type,
-  imgSrc,
-  stats,
+  types,
+  sprite,
+  baseStats,
   seen,
-  color,
-}: CardProps) {
+}: CardProps): () => void {
   const { addSeen, removeSeen } = useSeen()
 
   const handleToggle = useCallback(() => {
@@ -22,13 +23,12 @@ export function useCardToggle({
         id,
         species,
         num,
-        imgSrc: imgSrc ?? '',
-        type: [type],
-        stats,
-        color,
+        sprite,
+        types,
+        baseStats,
       })
     }
-  }, [seen, removeSeen, addSeen, id, species, num, type, imgSrc, stats, color])
+  }, [seen, removeSeen, addSeen, id, species, num, types, sprite, baseStats])
 
   return handleToggle
 }

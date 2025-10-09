@@ -1,5 +1,6 @@
-import { typeColors } from './entity'
 import { BadgeColor } from 'src/components/ui/badge'
+
+import { typeColors } from './types/card'
 
 function getTypeColor(type: string): BadgeColor {
   return typeColors[type.toUpperCase()] || 'gray'

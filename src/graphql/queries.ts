@@ -20,7 +20,6 @@ export const GET_ALL_POKEMON = gql`
   }
 `
 
-//revisar que pasa si en types viene mas de un type
 export const GET_POKEMON_DETAILS = gql`
   {
     getPokemon(pokemon: dragonite) {

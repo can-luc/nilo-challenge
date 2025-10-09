@@ -5,9 +5,9 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "raw.githubusercontent.com",
-      "archives.bulbagarden.net",
-      "play.pokemonshowdown.com",
+      'raw.githubusercontent.com',
+      'archives.bulbagarden.net',
+      'play.pokemonshowdown.com',
     ],
     unoptimized: false,
   },
@@ -17,6 +17,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
