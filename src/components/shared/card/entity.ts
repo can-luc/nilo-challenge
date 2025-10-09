@@ -1,4 +1,4 @@
-import type { BadgeColor } from 'src/components/ui/badge';
+import type { BadgeColor } from 'src/components/ui/badge'
 const allowedColors = [
   'primary',
   'secondary',
@@ -10,7 +10,7 @@ const allowedColors = [
   'black',
   'white',
   'purple',
-] as const;
+] as const
 
 //type BadgeColor = (typeof allowedColors)[number];
 
@@ -33,24 +33,24 @@ export const typeColors: Record<string, BadgeColor> = {
   DRAGON: 'indigo',
   STEEL: 'gray',
   GHOST: 'teal',
-};
-
-interface CardProps {
-  id: string;
-  species?: string;
-  num?: string;
-  type?: [];
-  imgSrc?: string | null;
-  stats?: {
-    hp: number;
-    attack: number;
-    defense: number;
-    gen: number;
-  };
-  seen?: boolean;
-  color?: string; // Agregado color como prop opcional
 }
 
-export { allowedColors };
+interface CardProps {
+  id: string
+  species?: string
+  num?: string
+  type?: []
+  imgSrc?: string | null
+  stats?: {
+    hp: number
+    attack: number
+    defense: number
+    gen: number
+  }
+  seen?: boolean
+  color?: string // Agregado color como prop opcional
+}
 
-export type { BadgeColor, CardProps };
+export { allowedColors }
+
+export type { BadgeColor, CardProps }

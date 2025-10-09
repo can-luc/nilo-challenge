@@ -1,6 +1,6 @@
-'use client';
-import { useState } from 'react';
-import { useSeen } from 'src/context/seen-context';
+'use client'
+import { useState } from 'react'
+import { useSeen } from 'src/context/seen-context'
 
 /**
  * Custom hook to clear the seen Pokémon list with a loading skeleton effect.
@@ -10,14 +10,14 @@ import { useSeen } from 'src/context/seen-context';
  * - handleClearSeen: A function to clear the seen list and trigger the skeleton display.
  */
 export function useClearSeenWithSkeleton(delay = 1000) {
-  const { clearSeen } = useSeen();
-  const [showSkeleton, setShowSkeleton] = useState(false);
+  const { clearSeen } = useSeen()
+  const [showSkeleton, setShowSkeleton] = useState(false)
 
   const handleClearSeen = () => {
-    clearSeen();
-    setShowSkeleton(true);
-    setTimeout(() => setShowSkeleton(false), delay);
-  };
+    clearSeen()
+    setShowSkeleton(true)
+    setTimeout(() => setShowSkeleton(false), delay)
+  }
 
-  return { showSkeleton, handleClearSeen };
+  return { showSkeleton, handleClearSeen }
 }

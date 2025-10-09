@@ -1,9 +1,9 @@
-'use client';
-import { useEffect, useState } from 'react';
+'use client'
+import { useEffect, useState } from 'react'
 
 type UseBannerOptions = {
-  duration?: number;
-};
+  duration?: number
+}
 
 /**
  * Custom hook para mostrar un banner temporal cuando un item cambia de valor.
@@ -16,21 +16,21 @@ type UseBannerOptions = {
 export function useBanner<T>(
   item: T | null,
   onHide: () => void,
-  options: UseBannerOptions = {}
+  options: UseBannerOptions = {},
 ) {
-  const { duration = 2000 } = options;
-  const [showBanner, setShowBanner] = useState(false);
+  const { duration = 2000 } = options
+  const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
     if (item) {
-      setShowBanner(true);
+      setShowBanner(true)
       const timer = setTimeout(() => {
-        setShowBanner(false);
-        onHide();
-      }, duration);
-      return () => clearTimeout(timer);
+        setShowBanner(false)
+        onHide()
+      }, duration)
+      return () => clearTimeout(timer)
     }
-  }, [item, onHide, duration]);
+  }, [item, onHide, duration])
 
-  return { showBanner };
+  return { showBanner }
 }

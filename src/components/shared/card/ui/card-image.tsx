@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import NotFoundImagen from './not-found-imagen';
+import Image from 'next/image'
+import NotFoundImagen from './not-found-imagen'
 
 interface CardImageProps {
-  imgSrc: string | null | undefined;
-  alt: string;
-  imgError: boolean | undefined;
-  setImgError: (v: boolean) => void;
+  imgSrc: string | null | undefined
+  alt: string
+  imgError: boolean | undefined
+  setImgError: (v: boolean) => void
 }
 
 export default function CardImage({
@@ -15,7 +15,7 @@ export default function CardImage({
   setImgError,
 }: CardImageProps) {
   return (
-    <div className='flex items-center justify-center pt-4'>
+    <div className="flex items-center justify-center pt-4">
       {imgSrc && !imgError ? (
         <Image
           src={imgSrc}
@@ -30,5 +30,5 @@ export default function CardImage({
         <NotFoundImagen />
       )}
     </div>
-  );
+  )
 }

@@ -1,8 +1,43 @@
 {
-  "extends": ["next/core-web-vitals"],
-  "plugins": ["@typescript-eslint"],
+  "extends": [
+    // "next/core-web-vitals",
+    // "next/typescript",
+    "plugin:prettier/recommended"
+    // "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    //  "jsx-a11y",
+    "unused-imports"
+  ],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "warn",
-    "react-hooks/exhaustive-deps": "warn"
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all",
+        "semi": false,
+        "tabWidth": 2,
+        "singleQuote": true,
+        "printWidth": 80,
+        "endOfLine": "auto",
+        "arrowParens": "always",
+        "plugins": ["prettier-plugin-tailwindcss"]
+      },
+      {
+        "usePrettierrc": false
+      }
+    ],
+
+    "unused-imports/no-unused-imports": "error",
+    "no-const-assign": "error",
+    "no-var": "error",
+    "no-obj-calls": "error",
+    "constructor-super": "error",
+    "no-setter-return": "error",
+    "no-undef": "error",
+    "no-unreachable": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "no-console": "error"
   }
 }

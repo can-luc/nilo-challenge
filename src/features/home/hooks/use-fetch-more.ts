@@ -1,16 +1,16 @@
-'use client';
-import { useEffect, useCallback, useReducer } from 'react';
-import { useSuspenseQuery } from '@apollo/client';
-import { useInView } from 'react-intersection-observer';
-import { GET_ALL_POKEMON } from 'src/graphql/queries';
-import { pokemonReducer, PokemonState } from '../states/reducer';
+'use client'
+import { useEffect, useCallback, useReducer } from 'react'
+import { useSuspenseQuery } from '@apollo/client'
+import { useInView } from 'react-intersection-observer'
+import { GET_ALL_POKEMON } from 'src/graphql/queries'
+import { pokemonReducer, PokemonState } from '../states/reducer'
 
-export const PAGE_SIZE = 10;
-export const INITIAL_OFFSET = 93;
+export const PAGE_SIZE = 10
+export const INITIAL_OFFSET = 93
 
 type GetAllPokemonResult = {
-  getAllPokemon: any[];
-};
+  getAllPokemon: any[]
+}
 
 const getInitialState = (initialData: any[]): PokemonState => ({
   pokemons: initialData ?? [],
@@ -18,7 +18,7 @@ const getInitialState = (initialData: any[]): PokemonState => ({
   hasMore: true,
   fetchMoreError: null,
   currentOffset: INITIAL_OFFSET + (initialData?.length ?? 0),
-});
+})
 
 /**
  * Custom hook para manejar la carga paginada de pokemons con infinite scroll.
@@ -29,16 +29,16 @@ const getInitialState = (initialData: any[]): PokemonState => ({
 export function useFetchMore(initialData: any[]) {
   const [state, dispatch] = useReducer(
     pokemonReducer,
-    getInitialState(initialData)
-  );
+    getInitialState(initialData),
+  )
 
   const { data, fetchMore } = useSuspenseQuery<GetAllPokemonResult>(
     GET_ALL_POKEMON,
     {
       variables: { offset: INITIAL_OFFSET, take: PAGE_SIZE },
       skip: !!initialData?.length,
-    }
-  );
+    },
+  )
 
   // Inicializa los pokemons solo una vez con los datos de la query
   useEffect(() => {
@@ -49,37 +49,36 @@ export function useFetchMore(initialData: any[]) {
           pokemons: data.getAllPokemon,
           offset: INITIAL_OFFSET + data.getAllPokemon.length,
         },
-      });
+      })
     }
-  }, [data, state.pokemons.length]);
+  }, [data, state.pokemons.length])
 
   // Callback para cargar más pokemons
   const handleFetchMore = useCallback(async () => {
-    dispatch({ type: 'FETCH_MORE_START' });
+    dispatch({ type: 'FETCH_MORE_START' })
     try {
       const res = await fetchMore({
         variables: { offset: state.currentOffset, take: PAGE_SIZE },
-      });
-      const newPokemons = res.data?.getAllPokemon ?? [];
+      })
+      const newPokemons = res.data?.getAllPokemon ?? []
       if (newPokemons.length === 0) {
-        dispatch({ type: 'NO_MORE' });
+        dispatch({ type: 'NO_MORE' })
       } else {
-        dispatch({ type: 'FETCH_MORE_SUCCESS', payload: newPokemons });
+        dispatch({ type: 'FETCH_MORE_SUCCESS', payload: newPokemons })
       }
     } catch (err) {
-      dispatch({ type: 'FETCH_MORE_ERROR', payload: err as Error });
-      console.error('Error en fetchMore:', err);
+      dispatch({ type: 'FETCH_MORE_ERROR', payload: err as Error })
     }
-  }, [fetchMore, state.currentOffset]);
+  }, [fetchMore, state.currentOffset])
 
   // Dispara fetchMore cuando el sentinel está en vista
-  const { ref, inView } = useInView({ threshold: 0, triggerOnce: false });
+  const { ref, inView } = useInView({ threshold: 0, triggerOnce: false })
 
   useEffect(() => {
     if (inView && !state.loadingMore && state.hasMore) {
-      handleFetchMore();
+      handleFetchMore()
     }
-  }, [inView, state.loadingMore, state.hasMore, handleFetchMore]);
+  }, [inView, state.loadingMore, state.hasMore, handleFetchMore])
 
   return {
     pokemons: state.pokemons,
@@ -87,5 +86,5 @@ export function useFetchMore(initialData: any[]) {
     hasMore: state.hasMore,
     fetchMoreError: state.fetchMoreError,
     ref,
-  };
+  }
 }
