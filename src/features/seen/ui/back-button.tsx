@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import BackIcon from 'src/components/icons/back'
 
 function BackButton() {

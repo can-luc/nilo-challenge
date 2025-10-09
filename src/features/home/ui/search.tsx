@@ -1,13 +1,13 @@
 import React from 'react'
+
 import SearchIcon from 'src/components/icons/search'
 
-export default function Search({
-  value,
-  onChange,
-}: {
+interface SearchProps {
   value?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-}) {
+}
+
+export default function Search({ value, onChange }: SearchProps) {
   return (
     <>
       <div className="w-full max-w-[20rem] pt-6 md:max-w-[41.5rem] md:pt-10 lg:max-w-[64.7rem]">

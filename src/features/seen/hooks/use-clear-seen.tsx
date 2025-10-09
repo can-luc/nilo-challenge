@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { useSeen } from 'src/context/seen-context'
+
+import { useSeen } from 'src/state/use-seen'
 
 /**
  * Custom hook to clear the seen Pokémon list with a loading skeleton effect.

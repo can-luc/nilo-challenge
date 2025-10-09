@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
+
 import { tv } from 'tailwind-variants'
 
 const button = tv({
@@ -37,7 +38,14 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button className={button({ color, size, className })} {...props}>
+    <button
+      className={button({
+        color,
+        size,
+        className,
+      })}
+      {...props}
+    >
       {children}
     </button>
   )

@@ -1,4 +1,5 @@
 import type { BadgeColor } from 'src/components/ui/badge'
+
 const allowedColors = [
   'primary',
   'secondary',
@@ -35,22 +36,6 @@ export const typeColors: Record<string, BadgeColor> = {
   GHOST: 'teal',
 }
 
-interface CardProps {
-  id: string
-  species?: string
-  num?: string
-  type?: []
-  imgSrc?: string | null
-  stats?: {
-    hp: number
-    attack: number
-    defense: number
-    gen: number
-  }
-  seen?: boolean
-  color?: string // Agregado color como prop opcional
-}
-
 export { allowedColors }
 
-export type { BadgeColor, CardProps }
+export type { BadgeColor }

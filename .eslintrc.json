@@ -9,6 +9,8 @@
     "prettier",
     //  "jsx-a11y",
     "unused-imports"
+    // "import"
+    // "react"
   ],
   "rules": {
     "prettier/prettier": [
@@ -27,17 +29,123 @@
         "usePrettierrc": false
       }
     ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": true,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": true,
+          "object": false
+        }
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
+    ],
+  
 
+
+    // ----- Import/Export Rules -----
+    // Controlan la calidad y limpieza de las importaciones y exportaciones
     "unused-imports/no-unused-imports": "error",
+    "no-duplicate-imports": "error",
+
+    // ----- Variables y Declaraciones -----
+    // Previenen errores comunes y promueven buenas prácticas en variables
     "no-const-assign": "error",
     "no-var": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "camelcase": "error",
+
+    // ----- Código Inseguro o Problemático -----
+    // Evitan patrones de código que pueden causar bugs o comportamientos inesperados
     "no-obj-calls": "error",
     "constructor-super": "error",
     "no-setter-return": "error",
     "no-undef": "error",
     "no-unreachable": "error",
-    "prefer-const": "error",
-    "prefer-rest-params": "error",
-    "no-console": "error"
+    "no-empty": "error",
+    "no-unused-expressions": "error",
+    "no-useless-catch": "error",
+    "require-await": "error",
+
+    // ----- Buenas Prácticas y Legibilidad -----
+    // Mejoran la calidad, legibilidad y mantenibilidad del código
+    "no-console": "error",
+    "complexity": ["error", 10],
+    "eqeqeq": ["error", "always"],
+    "max-lines": ["error", 300],
+    "max-depth": ["error", 4],
+    "max-params": ["error", 4],
+    "max-lines-per-function": ["error", 70],
+
+    // ----- React y JSX -----
+    "react/jsx-key": "error",
+    "react/self-closing-comp": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/no-unknown-property": "error",
+    "react/no-direct-mutation-state": "error",
+    "react/no-unused-state": "warn",
+    "react/jsx-no-bind": "warn",
+    "react/no-array-index-key": "warn",
+
+    // ----- TypeScript Rules -----
+    // Mejoran la calidad y seguridad del código TypeScript
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+    // "@typescript-eslint/explicit-module-boundary-types": "warn"
+    // ----- Orden de Imports -----
+    // Ordena los imports por tipo y alfabéticamente dentro de cada grupo
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "src/components/shared/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "src/components/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "src/context/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "src/features/**",
+            "group": "internal",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "newlines-between": "always"
+      }
+    ]
   }
 }

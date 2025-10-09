@@ -1,20 +1,19 @@
 'use client'
 
-import { Button } from 'src/components/ui/button'
-
 import Hero from 'src/components/shared/hero/hero'
 
+import SkeletonContainer from 'src/components/skeletons/container'
+import { Button } from 'src/components/ui/button'
+
+import { useSeen } from 'src/state/use-seen'
+
 import ErrorState from '../../../components/error-state'
+import CardGrid from '../../../components/shared/card/ui/card-grid'
+import { useClearSeenWithSkeleton } from '../hooks/use-clear-seen'
+import { formatTitleAndSubtitle } from '../utils'
+
 import BackButton from './back-button'
 
-import { useSeen } from '../../../context/seen-context'
-
-import { useClearSeenWithSkeleton } from '../hooks/use-clear-seen'
-
-import { formatTitleAndSubtitle } from '../utils'
-import CardGrid from './card-grid'
-
-import SkeletonContainer from 'src/components/skeletons/container'
 const NOT_FOUND_SEEN = 0
 export default function ContainerSeen() {
   const { seenList } = useSeen()
@@ -51,8 +50,7 @@ export default function ContainerSeen() {
           Clear All Seen Pokémon
         </Button>
       </div>
-
-      <CardGrid seenList={seenList} />
+      <CardGrid pokemons={seenList} seenList={[]} allSeen={true} />
     </>
   )
 }

@@ -1,29 +1,31 @@
 import Image from 'next/image'
+
 import NotFoundImagen from './not-found-imagen'
 
 interface CardImageProps {
-  imgSrc: string | null | undefined
+  sprite: string | null | undefined
   alt: string
   imgError: boolean | undefined
   setImgError: (v: boolean) => void
 }
 
 export default function CardImage({
-  imgSrc,
+  sprite,
   alt,
   imgError,
   setImgError,
 }: CardImageProps) {
+  const handleError = () => setImgError(true)
   return (
     <div className="flex items-center justify-center pt-4">
-      {imgSrc && !imgError ? (
+      {sprite && !imgError ? (
         <Image
-          src={imgSrc}
+          src={sprite}
           alt={alt}
           width={124}
           height={124}
           style={{ height: 'auto' }}
-          onError={() => setImgError(true)}
+          onError={handleError}
           unoptimized
         />
       ) : (

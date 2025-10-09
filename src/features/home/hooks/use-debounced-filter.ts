@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+
 import { useFilter } from './use-filter'
 
 /**
@@ -11,17 +12,16 @@ import { useFilter } from './use-filter'
  * @param delay Tiempo de debounce en ms (default: 500).
  * @returns { filtered, isTyping, search }
  */
-export function useDebouncedFilter<T extends Record<string, unknown>>(
+export function useDebouncedFilter<T extends object>(
   list: T[],
   searchInput: string,
-  field: keyof T,
+  field: keyof T & string,
   delay = 500,
 ) {
   const [search, setSearch] = useState('')
   const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
-    // Si el input está vacío, resetea el estado
     if (searchInput === '') {
       setSearch('')
       setIsTyping(false)
@@ -36,7 +36,7 @@ export function useDebouncedFilter<T extends Record<string, unknown>>(
     return () => clearTimeout(handler)
   }, [searchInput, delay])
 
-  // Filtra la lista usando el valor debounced
+  // Filtrar la lista usando el hook useFilter
   const filtered = useFilter(list, search, field)
 
   return {

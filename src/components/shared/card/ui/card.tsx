@@ -1,50 +1,50 @@
 'use client'
 import { useState } from 'react'
 
-// Components
+import { Pokemon } from 'src/types/pokemon'
 
-import Toogle from './toogle'
-import CardImage from './card-image'
-import CardHeader from './card-header'
-import CardStats from './card-stats'
-
-//Hooks
 import { useCardToggle } from '../hooks/use-card-toogle'
 
-// Interfaces
-import { CardProps } from '../entity'
+import CardHeader from './card-header'
+import CardImage from './card-image'
+import CardStats from './card-stats'
+import Toogle from './toogle'
+
+export interface CardProps extends Pokemon {
+  id: string
+  seen?: boolean
+  key?: string
+}
 
 export default function Card({
   id,
   species,
   num,
-  type,
-  imgSrc,
-  stats,
+  types,
+  sprite,
+  baseStats,
   seen = false,
-  color,
 }: CardProps) {
   const [imgError, setImgError] = useState(false)
   const handleToggle = useCardToggle({
     id,
     species,
     num,
-    type,
-    imgSrc,
-    stats,
+    types,
+    sprite,
+    baseStats,
     seen,
-    color,
   })
 
   return (
     <div className={`relative w-80 overflow-hidden rounded bg-white shadow-lg`}>
       {seen && (
-        <div className="absolute left-0 top-0 z-10 h-3 w-full rounded-t bg-success"></div>
+        <div className="absolute left-0 top-0 z-10 h-3 w-full rounded-t bg-success" />
       )}
-      <div className="bg-success"></div>
+      <div className="bg-success" />
       <Toogle seen={seen} onClick={handleToggle} />
       <CardImage
-        imgSrc={imgSrc}
+        sprite={sprite}
         alt={species ?? 'pokemon image'}
         imgError={imgError}
         setImgError={setImgError}
@@ -52,11 +52,19 @@ export default function Card({
       <CardHeader
         num={num ?? '#000'}
         species={species ?? 'Unknown'}
-        displayType={type ?? [{ name: 'Unknown' }]}
-        color={color ?? 'gray'}
+        displayType={types ?? [{ name: 'Unknown' }]}
       />
 
-      <CardStats stats={stats ?? { hp: 0, attack: 0, defense: 0, gen: 0 }} />
+      <CardStats
+        stats={
+          baseStats ?? {
+            hp: 0,
+            attack: 0,
+            defense: 0,
+            gen: 0,
+          }
+        }
+      />
     </div>
   )
 }

@@ -1,18 +1,18 @@
 'use client'
 import { useEffect, useCallback, useReducer } from 'react'
+
 import { useSuspenseQuery } from '@apollo/client'
 import { useInView } from 'react-intersection-observer'
+
 import { GET_ALL_POKEMON } from 'src/graphql/queries'
-import { pokemonReducer, PokemonState } from '../states/reducer'
+import { Pokemon } from 'src/types/pokemon'
+
+import { pokemonReducer, PokemonState } from './reducer'
 
 export const PAGE_SIZE = 10
 export const INITIAL_OFFSET = 93
 
-type GetAllPokemonResult = {
-  getAllPokemon: any[]
-}
-
-const getInitialState = (initialData: any[]): PokemonState => ({
+const getInitialState = (initialData: Pokemon[]): PokemonState => ({
   pokemons: initialData ?? [],
   loadingMore: false,
   hasMore: true,
@@ -26,13 +26,15 @@ const getInitialState = (initialData: any[]): PokemonState => ({
  * @returns Estado y funciones para manejar la carga de pokemons.
  * /
  */
-export function useFetchMore(initialData: any[]) {
+export function useFetchMore(initialData: Pokemon[]) {
   const [state, dispatch] = useReducer(
     pokemonReducer,
     getInitialState(initialData),
   )
-
-  const { data, fetchMore } = useSuspenseQuery<GetAllPokemonResult>(
+  interface PokemonsListMore {
+    getAllPokemon: Pokemon[]
+  }
+  const { data, fetchMore } = useSuspenseQuery<PokemonsListMore>(
     GET_ALL_POKEMON,
     {
       variables: { offset: INITIAL_OFFSET, take: PAGE_SIZE },
@@ -40,14 +42,16 @@ export function useFetchMore(initialData: any[]) {
     },
   )
 
+  const getAllPokemon = data?.getAllPokemon ?? []
+
   // Inicializa los pokemons solo una vez con los datos de la query
   useEffect(() => {
-    if (data?.getAllPokemon && state.pokemons.length === 0) {
+    if (data && state.pokemons.length === 0) {
       dispatch({
         type: 'INIT',
         payload: {
-          pokemons: data.getAllPokemon,
-          offset: INITIAL_OFFSET + data.getAllPokemon.length,
+          pokemons: getAllPokemon,
+          offset: INITIAL_OFFSET + getAllPokemon.length,
         },
       })
     }
@@ -60,7 +64,7 @@ export function useFetchMore(initialData: any[]) {
       const res = await fetchMore({
         variables: { offset: state.currentOffset, take: PAGE_SIZE },
       })
-      const newPokemons = res.data?.getAllPokemon ?? []
+      const newPokemons = res?.data?.getAllPokemon ?? []
       if (newPokemons.length === 0) {
         dispatch({ type: 'NO_MORE' })
       } else {
