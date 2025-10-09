@@ -1,42 +1,55 @@
+'use client';
+// Libraries
 import Link from 'next/link';
+
+// Components
 import { Button } from '../ui/button';
+import EyeNavbarIcon from '../icons/eye-navbar';
+
+// Context
+import { useSeen } from 'src/context/seen-context';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  return (
-    <nav className='fixed top-0 left-0 z-50 w-full  p-4 bg-[#F8FAFC] '>
-      <div className='flex items-center justify-between'>
-        <div>
-          <h1 className='text-2xl font-semibold font-poppins leading-[1.5] tracking-normal bg-gradient-to-r from-blue-700 via-purple-700 to-purple-600 text-transparent bg-clip-text text-inline-block'>
-            PokeDex
-          </h1>
+  const { seenList } = useSeen();
+  const countPokemons = seenList.length;
+  const pathname = usePathname();
 
-          <span className='text-xs'>Gotta catch ‘em all!</span>
+  return (
+    <nav className='shadow-navbar fixed h-[112px] top-0 left-0 z-40 w-screen  bg-navbar-background  xl:h-28 '>
+      <div
+        className='container 
+                    mx-auto flex items-center justify-between
+                    md:px-10
+                    lg:px-52
+                    px-4 sm:px-6 
+                    h-26 sm:h-20 lg:h-24'
+      >
+        <div className='pt-6 pb-10 md:pt-[34px]'>
+          <div className='flex flex-col space-y-[2px]'>
+            <h1
+              className=' text-2xl font-semibold font-poppins leading-[1.5] tracking-normal
+    bg-gradient-to-r from-[#275FBB] to-[#932482]
+    text-transparent bg-clip-text inline-block'
+            >
+              PokeDex
+            </h1>
+
+            <span className='text-xs font-medium font-poppins'>
+              Gotta catch ‘em all!
+            </span>
+          </div>
         </div>
-        <Link href='/seen' className='text-sm font-poppins text-[#6B7280]'>
-        <Button color='primary' size='sm'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-5 w-5'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-            />
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-            />
-          </svg>
-          Seen (0)
-        </Button>
-        </Link>
+        <div className='pr-2 py-11'>
+          {pathname !== '/seen' && (
+            <Link href='/seen' className='text-sm font-poppins text-link'>
+              <Button color='primary' size='s'>
+                <EyeNavbarIcon />
+                Seen ({countPokemons})
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
