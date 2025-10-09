@@ -1,5 +1,5 @@
-import { tv } from 'tailwind-variants';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { tv } from 'tailwind-variants'
+import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 const badge = tv({
   base: 'font-semibold flex items-center font-poppins text-white rounded-full py-2 px-6 leading-[1.21]',
@@ -34,7 +34,7 @@ const badge = tv({
     size: 'md',
     color: 'primary',
   },
-});
+})
 
 type BadgeProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   color?:
@@ -54,12 +54,12 @@ type BadgeProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     | 'cyan'
     | 'indigo'
     | 'teal'
-    | undefined;
-  size?: 'sm' | 'md' | 'lg' | 's';
-  children: ReactNode;
-};
+    | undefined
+  size?: 'sm' | 'md' | 'lg' | 's'
+  children: ReactNode
+}
 
-export type BadgeColor = BadgeProps['color'];
+export type BadgeColor = BadgeProps['color']
 
 export function Badge({
   color = 'primary',
@@ -72,5 +72,5 @@ export function Badge({
     <button className={badge({ color, size, className })} {...props}>
       {children}
     </button>
-  );
+  )
 }

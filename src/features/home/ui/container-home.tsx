@@ -1,48 +1,48 @@
-'use client';
-import React from 'react';
+'use client'
+import React from 'react'
 // Components shared
-import Hero from 'src/components/shared/hero/hero';
+import Hero from 'src/components/shared/hero/hero'
 
 // Components feature
-import Search from './search';
-import SearchInfo from './search-info';
-import CardGrid from './card-grid';
-import Banner from './banner';
+import Search from './search'
+import SearchInfo from './search-info'
+import CardGrid from './card-grid'
+import Banner from './banner'
 
 // Hooks
-import { useDebouncedFilter } from '../hooks/use-debounced-filter';
-import { useBanner } from '../hooks/use-banner';
-import { useFetchMore } from '../hooks/use-fetch-more';
+import { useDebouncedFilter } from '../hooks/use-debounced-filter'
+import { useBanner } from '../hooks/use-banner'
+import { useFetchMore } from '../hooks/use-fetch-more'
 
 // Context
-import { useSeen } from 'src/context/seen-context';
-import SkeletonCard from 'src/components/skeletons/card';
+import { useSeen } from 'src/context/seen-context'
+import SkeletonCard from 'src/components/skeletons/card'
 
-const DURATION_BANNER = 2000;
+const DURATION_BANNER = 2000
 
 export default function ContainerHome({ initialData }: { initialData: any }) {
-  const [searchInput, setSearchInput] = React.useState('');
-  const { seenList, lastAdded, clearLastAdded } = useSeen();
+  const [searchInput, setSearchInput] = React.useState('')
+  const { seenList, lastAdded, clearLastAdded } = useSeen()
 
   const showBanner = useBanner(lastAdded, clearLastAdded, {
     duration: DURATION_BANNER,
-  });
+  })
 
   // Infinite scroll hook
-  const { pokemons, loadingMore, hasMore, ref } = useFetchMore(initialData);
+  const { pokemons, loadingMore, hasMore, ref } = useFetchMore(initialData)
 
   const { filtered, isTyping } = useDebouncedFilter(
     pokemons,
     searchInput,
-    'species'
-  );
+    'species',
+  )
 
   return (
     <>
       {showBanner && lastAdded && (
         <Banner message={lastAdded.species ?? 'Unknown'} show={true} />
       )}
-      <div className='pt-2 md:pt-6'>
+      <div className="pt-2 md:pt-6">
         <Hero />
       </div>
 
@@ -51,7 +51,7 @@ export default function ContainerHome({ initialData }: { initialData: any }) {
         onChange={(e) => setSearchInput(e.target.value)}
       />
 
-      <div className='pt-6 px-4'>
+      <div className="px-4 pt-6">
         <SearchInfo search={searchInput} pokemonsCount={filtered.length} />
       </div>
 
@@ -62,12 +62,12 @@ export default function ContainerHome({ initialData }: { initialData: any }) {
       )}
       {hasMore && (
         <div
-          className='w-full grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3'
+          className="sm:grid-cols-2 xl:grid-cols-3 grid w-full grid-cols-1 gap-4"
           ref={ref}
         >
           {loadingMore && <SkeletonCard />}
         </div>
       )}
     </>
-  );
+  )
 }

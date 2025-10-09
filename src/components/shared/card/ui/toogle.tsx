@@ -1,26 +1,26 @@
-import EyeClosedIcon from '../../../icons/eye-closed';
-import EyeOpenIcon from '../../../icons/eye-open';
+import EyeClosedIcon from '../../../icons/eye-closed'
+import EyeOpenIcon from '../../../icons/eye-open'
 
 interface ToogleProps {
-  seen?: boolean;
-  onClick?: () => void;
+  seen?: boolean
+  onClick?: () => void
 }
 export default function Toogle({ seen = false, onClick }: ToogleProps) {
   return (
     <div
-      className='absolute right-4 top-4'
+      className="absolute right-4 top-4"
       onClick={onClick}
       style={{ cursor: 'pointer' }}
     >
       {seen ? (
-        <span className='flex items-center justify-center w-8 h-8 bg-success rounded-full shadow-md transition-all duration-300'>
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-success shadow-md transition-all duration-300">
           <EyeOpenIcon />
         </span>
       ) : (
-        <span className='flex items-center justify-center w-8 h-8 bg-white border border-classic rounded-full shadow-md transition-all duration-300'>
+        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-classic bg-white shadow-md transition-all duration-300">
           <EyeClosedIcon />
         </span>
       )}
     </div>
-  );
+  )
 }

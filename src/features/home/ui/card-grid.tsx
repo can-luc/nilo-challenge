@@ -1,8 +1,8 @@
-import Card from 'src/components/shared/card/ui/card';
+import Card from 'src/components/shared/card/ui/card'
 
 interface CardGridProps {
-  filteredPokemons: any[];
-  seenList: { id: number | string }[];
+  filteredPokemons: any[]
+  seenList: { id: number | string }[]
 }
 
 export default function CardGrid({
@@ -10,9 +10,8 @@ export default function CardGrid({
   seenList,
 }: CardGridProps) {
   return (
-    
-        // <div className='p-8 max-w-screen-lg pt-4 mr-3  sm:px-10 md:px-40 xl:px-0 grid grid-cols-1 gap-7 sm:grid-cols-2 md:gap-5 xl:gap-5 xl:grid-cols-3'></div>
-     <div className=" pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  md:gap-1.5 gap-3 lg:gap-8 ">
+    // <div className='p-8 max-w-screen-lg pt-4 mr-3  sm:px-10 md:px-40 xl:px-0 grid grid-cols-1 gap-7 sm:grid-cols-2 md:gap-5 xl:gap-5 xl:grid-cols-3'></div>
+    <div className="grid grid-cols-1 gap-3 pt-6 md:grid-cols-2 md:gap-1.5 lg:grid-cols-3 lg:gap-8">
       {filteredPokemons.map((pokemon) => (
         <Card
           key={pokemon.key}
@@ -27,5 +26,5 @@ export default function CardGrid({
         />
       ))}
     </div>
-  );
+  )
 }

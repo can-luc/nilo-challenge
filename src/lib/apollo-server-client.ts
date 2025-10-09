@@ -1,5 +1,4 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 
 export const apolloServerClient = new ApolloClient({
   ssrMode: true,
@@ -8,4 +7,4 @@ export const apolloServerClient = new ApolloClient({
     fetch,
   }),
   cache: new InMemoryCache(),
-});
+})

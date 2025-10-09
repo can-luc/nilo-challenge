@@ -1,6 +1,6 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useFilter } from './use-filter';
+'use client'
+import { useState, useEffect } from 'react'
+import { useFilter } from './use-filter'
 
 /**
  * Hook para filtrar una lista con debounce sobre un campo específico.
@@ -15,33 +15,33 @@ export function useDebouncedFilter<T extends Record<string, unknown>>(
   list: T[],
   searchInput: string,
   field: keyof T,
-  delay = 500
+  delay = 500,
 ) {
-  const [search, setSearch] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const [search, setSearch] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
     // Si el input está vacío, resetea el estado
     if (searchInput === '') {
-      setSearch('');
-      setIsTyping(false);
-      return;
+      setSearch('')
+      setIsTyping(false)
+      return
     }
-    setIsTyping(true);
+    setIsTyping(true)
     const handler = setTimeout(() => {
-      setSearch(searchInput);
-      setIsTyping(false);
-    }, delay);
+      setSearch(searchInput)
+      setIsTyping(false)
+    }, delay)
 
-    return () => clearTimeout(handler);
-  }, [searchInput, delay]);
+    return () => clearTimeout(handler)
+  }, [searchInput, delay])
 
   // Filtra la lista usando el valor debounced
-  const filtered = useFilter(list, search, field);
+  const filtered = useFilter(list, search, field)
 
   return {
     filtered,
     isTyping,
     debouncedValue: search,
-  };
+  }
 }

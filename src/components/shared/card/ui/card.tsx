@@ -1,18 +1,18 @@
-'use client';
-import { useState } from 'react';
+'use client'
+import { useState } from 'react'
 
 // Components
 
-import Toogle from './toogle';
-import CardImage from './card-image';
-import CardHeader from './card-header';
-import CardStats from './card-stats';
+import Toogle from './toogle'
+import CardImage from './card-image'
+import CardHeader from './card-header'
+import CardStats from './card-stats'
 
 //Hooks
-import { useCardToggle } from '../hooks/use-card-toogle';
+import { useCardToggle } from '../hooks/use-card-toogle'
 
 // Interfaces
-import { CardProps } from '../entity';
+import { CardProps } from '../entity'
 
 export default function Card({
   id,
@@ -24,7 +24,7 @@ export default function Card({
   seen = false,
   color,
 }: CardProps) {
-  const [imgError, setImgError] = useState(false);
+  const [imgError, setImgError] = useState(false)
   const handleToggle = useCardToggle({
     id,
     species,
@@ -34,16 +34,14 @@ export default function Card({
     stats,
     seen,
     color,
-  });
+  })
 
   return (
-    <div
-      className={` relative rounded overflow-hidden shadow-lg bg-white w-80 `}
-    >
+    <div className={`relative w-80 overflow-hidden rounded bg-white shadow-lg`}>
       {seen && (
-        <div className='absolute top-0 left-0 w-full h-3 rounded-t bg-success z-10'></div>
+        <div className="absolute left-0 top-0 z-10 h-3 w-full rounded-t bg-success"></div>
       )}
-      <div className='bg-success'></div>
+      <div className="bg-success"></div>
       <Toogle seen={seen} onClick={handleToggle} />
       <CardImage
         imgSrc={imgSrc}
@@ -60,5 +58,5 @@ export default function Card({
 
       <CardStats stats={stats ?? { hp: 0, attack: 0, defense: 0, gen: 0 }} />
     </div>
-  );
+  )
 }

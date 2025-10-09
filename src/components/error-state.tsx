@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { Button } from 'src/components/ui/button';
-import EyeEmptyIcon from 'src/components/icons/eye-empty';
+import Link from 'next/link'
+import { Button } from 'src/components/ui/button'
+import EyeEmptyIcon from 'src/components/icons/eye-empty'
 
 interface ErrorStateProps {
-  title?: string;
-  isEmpty?: boolean;
+  title?: string
+  isEmpty?: boolean
 }
 
 export default function ErrorState({
@@ -13,27 +13,27 @@ export default function ErrorState({
 }: ErrorStateProps) {
   return (
     <>
-      <div className='w-full max-w-xs mx-auto rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col items-center p-6'>
+      <div className="mx-auto flex w-full max-w-xs flex-col items-center overflow-hidden rounded-2xl bg-white p-6 shadow-lg">
         {/* icon eye closed */}
-        <div className='flex items-center justify-center mb-4 mt-2'>
+        <div className="mb-4 mt-2 flex items-center justify-center">
           <EyeEmptyIcon />
         </div>
-        <span className='font-poppins font-bold text-lg text-primary mb-2 text-center'>
+        <span className="mb-2 text-center font-poppins text-lg font-bold text-primary">
           {title}
         </span>
         {isEmpty && (
-          <div className='text-primary text-center font-poppins text-base font-normal mb-6'>
+          <div className="mb-6 text-center font-poppins text-base font-normal text-primary">
             You haven’t marked any Pokémon as seen yet. Start exploring and
             click the eye icon on Pokémon cards to track your discoveries!
           </div>
         )}
 
-        <Link href='/'>
-          <Button color='primary' size='md'>
+        <Link href="/">
+          <Button color="primary" size="md">
             Explore Pokémon
           </Button>
         </Link>
       </div>
     </>
-  );
+  )
 }

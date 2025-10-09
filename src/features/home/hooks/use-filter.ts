@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 /**
  * Custom hook para filtrar una lista de objetos basada en un término de búsqueda.
@@ -10,12 +10,12 @@ import { useMemo } from 'react';
 export function useFilter<T extends { [key: string]: any }>(
   list: T[],
   search: string,
-  field: keyof T = 'species'
+  field: keyof T = 'species',
 ): T[] {
   return useMemo(() => {
-    if (!search) return list;
+    if (!search) return list
     return list.filter((item) =>
-      String(item[field]).toLowerCase().includes(search.toLowerCase())
-    );
-  }, [list, search, field]);
+      String(item[field]).toLowerCase().includes(search.toLowerCase()),
+    )
+  }, [list, search, field])
 }
