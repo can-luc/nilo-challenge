@@ -1,3 +1,10 @@
+
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -17,6 +24,8 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
+  reactStrictMode: true,
+  swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = withPWA(nextConfig)
