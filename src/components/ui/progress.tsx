@@ -1,27 +1,27 @@
 interface ProgressProps {
-  label: string;
-  value: number;
+  label: string
+  value: number
 }
-
+const NOT_VALUE = 0
 export default function Progress({ label, value }: ProgressProps) {
   return (
-    <div className='w-full'>
-      <div className='flex justify-between mb-1 pt-2 pb-2'>
-        <span className='text-xs font-poppins font-normal leading-none tracking-normal text-[#64748B]'>
+    <div className="w-full">
+      <div className="mb-1 flex justify-between pt-2">
+        <span className="font-poppins text-xs font-normal leading-none tracking-normal text-card-progress-text">
           {label}
         </span>
-        <span className='text-xs font-poppins font-semibold leading-none tracking-normal text-[#64748B]'>
-          {value === 0 ? 'ZU' : value}
+        <span className="font-poppins text-xs font-semibold leading-none tracking-normal text-card-progress-text">
+          {value === NOT_VALUE ? 'ZU' : value}
         </span>
       </div>
-      {value > 0 && (
-        <div className='w-full bg-[#F1F5F9] rounded-full h-1.5'>
+      {value > NOT_VALUE && (
+        <div className="h-1.5 w-full rounded-full bg-card-progress-container">
           <div
-            className='bg-[#4338CA] h-1.5 rounded-full transition-all duration-300'
+            className="h-1.5 rounded-full bg-card-progress-bar transition-all duration-300"
             style={{ width: `${value}%` }}
-          ></div>
+          />
         </div>
       )}
     </div>
-  );
+  )
 }

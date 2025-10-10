@@ -1,7 +1,8 @@
-export default function NotFound() {
+import ErrorState from 'src/components/error-state'
+export default function PageNotFound() {
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <h1>404 - Page Not Found</h1>
-    </main>
-  );
+    <>
+      <ErrorState title={'Not Found Page'} />
+    </>
+  )
 }
