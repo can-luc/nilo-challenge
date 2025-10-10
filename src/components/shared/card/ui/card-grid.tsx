@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react'
+import SkeletonCard from 'src/components/skeletons/card'
 
 import { Pokemon } from 'src/types/pokemon'
 
@@ -17,7 +18,7 @@ export default function CardGrid({
 }: CardGridProps) {
   return (
     <div className="grid grid-cols-1 gap-3 pt-6 md:grid-cols-2 md:gap-1.5 lg:grid-cols-3 lg:gap-8">
-      <Suspense fallback={<div>Cargando tarjetas...</div>}>
+      <Suspense fallback={<SkeletonCard />}>
         {pokemons.map((pokemon, index) => {
           const { key, num, species, sprite, baseStats, types } = pokemon
 
