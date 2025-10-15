@@ -1,6 +1,8 @@
+import React from 'react'
+
 import SkeletonCard from './card'
 
-export default function SkeletonContainer() {
+const SkeletonContainer: React.FC = () => {
   return (
     <>
       <div className="sm:grid-cols-2 xl:grid-cols-3 grid w-full grid-cols-1 gap-4 pt-4">
@@ -11,3 +13,4 @@ export default function SkeletonContainer() {
     </>
   )
 }
+export default SkeletonContainer

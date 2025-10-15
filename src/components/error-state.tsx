@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Link from 'next/link'
 
 import EyeEmptyIcon from 'src/components/icons/eye-empty'
@@ -8,10 +10,10 @@ interface ErrorStateProps {
   isEmpty?: boolean
 }
 
-export default function ErrorState({
+const ErrorState: React.FC<ErrorStateProps> = ({
   title = 'No Pokémon Seen Yet',
   isEmpty = false,
-}: ErrorStateProps) {
+}) => {
   return (
     <>
       <div className="mx-auto flex w-full max-w-xs flex-col items-center overflow-hidden rounded-2xl bg-white p-6 shadow-lg">
@@ -38,3 +40,4 @@ export default function ErrorState({
     </>
   )
 }
+export default ErrorState

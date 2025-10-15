@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Progress from '../../../ui/progress'
 
 interface CardStatsProps {
@@ -9,7 +11,7 @@ interface CardStatsProps {
   }
 }
 
-export default function CardStats({ stats }: CardStatsProps) {
+const CardStats: React.FC<CardStatsProps> = ({ stats }) => {
   const { hp, attack, defense, gen } = stats
   return (
     <div className="space-y-2 p-4 pb-2">
@@ -20,3 +22,4 @@ export default function CardStats({ stats }: CardStatsProps) {
     </div>
   )
 }
+export default CardStats

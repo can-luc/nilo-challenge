@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react'
+
 import Hero from 'src/components/shared/hero/hero'
 
 import SkeletonContainer from 'src/components/skeletons/container'
@@ -9,13 +11,13 @@ import { useSeen } from 'src/state/use-seen'
 
 import ErrorState from '../../../components/error-state'
 import CardGrid from '../../../components/shared/card/ui/card-grid'
+import { NOT_FOUND_SEEN } from '../constants'
 import { useClearSeenWithSkeleton } from '../hooks/use-clear-seen'
 import { formatTitleAndSubtitle } from '../utils'
 
-import BackButton from './back-button'
+import { BackButton } from './back-button'
 
-const NOT_FOUND_SEEN = 0
-export default function ContainerSeen() {
+const ContainerSeen: React.FC = () => {
   const { seenList } = useSeen()
 
   const { title, subtitle } = formatTitleAndSubtitle(seenList.length)
@@ -54,3 +56,4 @@ export default function ContainerSeen() {
     </>
   )
 }
+export default ContainerSeen

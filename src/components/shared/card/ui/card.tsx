@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Pokemon } from 'src/types/pokemon'
 
@@ -16,7 +16,7 @@ export interface CardProps extends Pokemon {
   key?: string
 }
 
-export default function Card({
+const Card: React.FC<CardProps> = ({
   id,
   species,
   num,
@@ -24,7 +24,7 @@ export default function Card({
   sprite,
   baseStats,
   seen = false,
-}: CardProps) {
+}) => {
   const [imgError, setImgError] = useState(false)
   const handleToggle = useCardToggle({
     id,
@@ -43,12 +43,14 @@ export default function Card({
       )}
       <div className="bg-success" />
       <Toogle seen={seen} onClick={handleToggle} />
-      <CardImage
-        sprite={sprite}
-        alt={species ?? 'pokemon image'}
-        imgError={imgError}
-        setImgError={setImgError}
-      />
+      <div className="flex h-40 w-full items-center justify-center">
+        <CardImage
+          sprite={sprite}
+          alt={species ?? 'pokemon image'}
+          imgError={imgError}
+          setImgError={setImgError}
+        />
+      </div>
       <CardHeader
         num={num ?? '#000'}
         species={species ?? 'Unknown'}
@@ -68,3 +70,4 @@ export default function Card({
     </div>
   )
 }
+export default Card

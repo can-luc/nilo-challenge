@@ -1,4 +1,4 @@
-import type { BadgeColor } from 'src/components/ui/badge'
+import type { BadgeColor } from 'src/components/ui/badge/types'
 
 const allowedColors = [
   'primary',

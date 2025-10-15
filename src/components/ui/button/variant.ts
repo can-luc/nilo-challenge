@@ -1,8 +1,6 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react'
-
 import { tv } from 'tailwind-variants'
 
-const button = tv({
+export const buttonVariant = tv({
   base: ' font-semibold flex items-center gap-2 font-poppins bg-blue-500 text-white rounded-full active:opacity-80 py-2 px-2',
   variants: {
     color: {
@@ -23,30 +21,3 @@ const button = tv({
     color: 'primary',
   },
 })
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  color?: 'primary' | 'secondary' | 'clear'
-  size?: 'sm' | 'md' | 'lg' | 's'
-  children: ReactNode
-}
-
-export function Button({
-  color = 'primary',
-  size = 'md',
-  children,
-  className = '',
-  ...props
-}: ButtonProps) {
-  return (
-    <button
-      className={button({
-        color,
-        size,
-        className,
-      })}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-}

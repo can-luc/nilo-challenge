@@ -10,6 +10,7 @@ import { useSeen } from 'src/state/use-seen'
 import { Pokemon } from 'src/types/pokemon'
 
 import CardGrid from '../../../components/shared/card/ui/card-grid'
+import { DURATION_BANNER, NOT_FOUND_POKEMONS } from '../constants'
 import { useBanner } from '../hooks/use-banner'
 import { useDebouncedFilter } from '../hooks/use-debounced-filter'
 import { useFetchMore } from '../states/use-fetch-more'
@@ -19,14 +20,12 @@ import Banner from './banner'
 import Search from './search'
 import SearchInfo from './search-info'
 
-const DURATION_BANNER = 2000
-
 interface ContainerHomeProps {
   initialData: PokemonsList
 }
 
-export default function ContainerHome({ initialData }: ContainerHomeProps) {
-  const [searchInput, setSearchInput] = React.useState('')
+const ContainerHome: React.FC<ContainerHomeProps> = ({ initialData }) => {
+  const [searchInput, setSearchInput] = React.useState<string>('')
   const { seenList, lastAdded, clearLastAdded } = useSeen()
 
   const showBanner = useBanner(lastAdded, clearLastAdded, {
@@ -42,9 +41,7 @@ export default function ContainerHome({ initialData }: ContainerHomeProps) {
     'species',
   )
 
-  const NOT_FOUND_POKEMONS = 0
-
-  const countPokemons = filtered.length
+  const countPokemons = React.useMemo(() => filtered.length, [filtered])
 
   if (countPokemons === NOT_FOUND_POKEMONS) {
     return <ErrorState title={'There are no Pokémons to SEE'} isEmpty={false} />
@@ -61,7 +58,9 @@ export default function ContainerHome({ initialData }: ContainerHomeProps) {
 
       <Search
         value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchInput(e.target.value)
+        }
       />
 
       <div className="px-4 pt-6">
@@ -87,3 +86,5 @@ export default function ContainerHome({ initialData }: ContainerHomeProps) {
     </>
   )
 }
+
+export default ContainerHome

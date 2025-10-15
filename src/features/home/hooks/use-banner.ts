@@ -18,7 +18,7 @@ export function useBanner<T>(
   onHide: () => void,
   options: UseBannerOptions = {},
 ) {
-  const { duration = 2000 } = options
+  const { duration = 1000 } = options
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {

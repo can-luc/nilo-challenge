@@ -4,13 +4,7 @@ import { expect, test, vi } from 'vitest'
 import { SeenProvider } from 'src/providers/seen-provider'
 
 import Card from './card'
-//  id,
-//   species,
-//   num,
-//   types,
-//   sprite,
-//   baseStats,
-//   seen = false,
+
 test('renders Card component with correct props', () => {
   const mockProps = {
     id: '1',

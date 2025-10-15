@@ -1,12 +1,13 @@
+import React from 'react'
 interface HeroProps {
   title?: string
   subtitle?: string
 }
 
-export default function Hero({
+const Hero: React.FC<HeroProps> = ({
   title = 'Discover Amazing Pokemon',
   subtitle = 'Explore the world of Pokémon, discover their unique abilities, and build your collection. Mark your favorites as seen to keep track of your progress!',
-}: HeroProps) {
+}) => {
   return (
     <section className="px-4 text-center md:px-10 lg:px-[20.375rem]">
       <div className="">
@@ -23,3 +24,4 @@ export default function Hero({
     </section>
   )
 }
+export default Hero

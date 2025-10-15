@@ -5,7 +5,8 @@ import { Poppins } from 'next/font/google'
 import Navbar from 'src/components/layout/navbar'
 
 // Import global CSS styles
-import '../styles/globals.css'
+import 'src/styles/globals.css'
+
 import ApolloWrapper from 'src/providers/apollo-provider'
 import { SeenProvider } from 'src/providers/seen-provider'
 
@@ -17,6 +18,8 @@ export const metadata = {
 
 const poppins = Poppins({
   subsets: ['latin'],
+  display: 'swap', // Renderiza con una fuente de sistema mientras se carga Poppins
+  preload: true, // Pre-carga la fuente para mejorar el primer paint
   weight: ['400', '500', '600', '700'],
   variable: '--font-poppins',
 })
@@ -27,6 +30,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${poppins.variable}`}>
+      <head>
+        <link rel="preload" href="../styles/globals.css" as="style" />
+      </head>
       <body className="min-h-screen bg-body-background">
         <ApolloWrapper>
           <SeenProvider>

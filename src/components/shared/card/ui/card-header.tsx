@@ -1,4 +1,7 @@
-import { Badge } from '../../../ui/badge'
+import React from 'react'
+
+import { Badge } from 'src/components/ui/badge'
+
 import { getTypeColor } from '../utils'
 
 interface CardHeaderProps {
@@ -7,11 +10,11 @@ interface CardHeaderProps {
   displayType: [{ name: string }]
 }
 
-export default function CardHeader({
+const CardHeader: React.FC<CardHeaderProps> = ({
   num,
   species,
   displayType,
-}: CardHeaderProps) {
+}) => {
   const formatSpecies = species.charAt(0).toUpperCase() + species.slice(1)
   return (
     <>
@@ -33,3 +36,4 @@ export default function CardHeader({
     </>
   )
 }
+export default CardHeader

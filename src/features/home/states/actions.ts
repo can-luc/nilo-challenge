@@ -1,11 +1,11 @@
-import { Pokemon } from 'src/types/pokemon'
+import { PokemonsList } from '../types/pokemons-list'
 
 export type PokemonAction =
   | {
       type: 'INIT'
-      payload: { pokemons: Pokemon[]; offset: number }
+      payload: { pokemons: PokemonsList; offset: number }
     }
   | { type: 'FETCH_MORE_START' }
-  | { type: 'FETCH_MORE_SUCCESS'; payload: Pokemon[] }
+  | { type: 'FETCH_MORE_SUCCESS'; payload: PokemonsList }
   | { type: 'FETCH_MORE_ERROR'; payload: Error }
   | { type: 'NO_MORE' }

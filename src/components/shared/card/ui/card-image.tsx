@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Image from 'next/image'
 
 import NotFoundImagen from './not-found-imagen'
@@ -9,24 +11,26 @@ interface CardImageProps {
   setImgError: (v: boolean) => void
 }
 
-export default function CardImage({
+const CardImage: React.FC<CardImageProps> = ({
   sprite,
   alt,
   imgError,
   setImgError,
-}: CardImageProps) {
+}) => {
   const handleError = () => setImgError(true)
   return (
-    <div className="flex items-center justify-center pt-4">
+    <div className="relative flex h-32 w-32 items-center justify-center pt-4">
       {sprite && !imgError ? (
         <Image
           src={sprite}
           alt={alt}
-          width={124}
-          height={124}
-          style={{ height: 'auto' }}
+          // width={124}
+          // height={124}
+          layout="fill"
+          objectFit="contain"
+          //style={{ height: 'auto' }}
           onError={handleError}
-          unoptimized
+          priority
         />
       ) : (
         <NotFoundImagen />
@@ -34,3 +38,4 @@ export default function CardImage({
     </div>
   )
 }
+export default CardImage
