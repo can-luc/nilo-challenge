@@ -1,94 +1,51 @@
-'use client'
-import { useEffect, useCallback, useReducer } from 'react'
+import React, { useEffect } from 'react'
 
-import { useSuspenseQuery } from '@apollo/client'
-import { useInView } from 'react-intersection-observer'
+import { useIntersectionObserver } from '../hooks/use-Intersection-observer'
+import { usePokemonPagination } from '../hooks/use-pokemon-pagination'
+import { PokemonsList } from '../types/pokemons-list'
 
-import { GET_ALL_POKEMON } from 'src/graphql/queries'
-import { Pokemon } from 'src/types/pokemon'
-
-import { pokemonReducer, PokemonState } from './reducer'
-
-export const PAGE_SIZE = 10
-export const INITIAL_OFFSET = 93
-
-const getInitialState = (initialData: Pokemon[]): PokemonState => ({
-  pokemons: initialData ?? [],
-  loadingMore: false,
-  hasMore: true,
-  fetchMoreError: null,
-  currentOffset: INITIAL_OFFSET + (initialData?.length ?? 0),
-})
+interface FetchMoreResult {
+  pokemons: PokemonsList
+  loadingMore: boolean
+  hasMore: boolean
+  fetchMoreError: Error | null
+  ref: React.RefCallback<HTMLDivElement> | React.RefObject<HTMLDivElement>
+}
 
 /**
- * Custom hook para manejar la carga paginada de pokemons con infinite scroll.
- * @param initialData Datos iniciales para poblar la lista de pokemons.
- * @returns Estado y funciones para manejar la carga de pokemons.
- * /
+ * Hook para manejar la lógica de paginación y carga adicional de datos
+ * cuando el usuario llega al final de la lista.
+ *
+ * @param initialData - Lista inicial de Pokémon obtenida desde el servidor.
+ * @returns Un objeto con los datos actuales, estado de carga, errores y una referencia para el observador.
  */
-export function useFetchMore(initialData: Pokemon[]) {
-  const [state, dispatch] = useReducer(
-    pokemonReducer,
-    getInitialState(initialData),
-  )
-  interface PokemonsListMore {
-    getAllPokemon: Pokemon[]
-  }
-  const { data, fetchMore } = useSuspenseQuery<PokemonsListMore>(
-    GET_ALL_POKEMON,
-    {
-      variables: { offset: INITIAL_OFFSET, take: PAGE_SIZE },
-      skip: !!initialData?.length,
-    },
-  )
+export function useFetchMore(initialData: PokemonsList): FetchMoreResult {
+  // Usa el hook de paginación para manejar el estado y la lógica de carga de más datos.
+  const { pokemons, loadingMore, hasMore, fetchMoreError, fetchMore } =
+    usePokemonPagination(initialData)
 
-  const getAllPokemon = data?.getAllPokemon ?? []
+  // Usa el hook de Intersection Observer para detectar cuando el usuario llega al final de la lista.
+  const { ref, inView } = useIntersectionObserver()
 
-  // Inicializa los pokemons solo una vez con los datos de la query
+  /**
+   * Efecto para cargar más datos cuando el elemento observado está en vista,
+   * no hay una carga en progreso y aún hay más datos disponibles.
+   */
   useEffect(() => {
-    if (data && state.pokemons.length === 0) {
-      dispatch({
-        type: 'INIT',
-        payload: {
-          pokemons: getAllPokemon,
-          offset: INITIAL_OFFSET + getAllPokemon.length,
-        },
-      })
+    if (inView && !loadingMore && hasMore) {
+      fetchMore() // Llama a la función para cargar más datos.
     }
-  }, [data, state.pokemons.length])
+  }, [inView, loadingMore, hasMore, fetchMore])
 
-  // Callback para cargar más pokemons
-  const handleFetchMore = useCallback(async () => {
-    dispatch({ type: 'FETCH_MORE_START' })
-    try {
-      const res = await fetchMore({
-        variables: { offset: state.currentOffset, take: PAGE_SIZE },
-      })
-      const newPokemons = res?.data?.getAllPokemon ?? []
-      if (newPokemons.length === 0) {
-        dispatch({ type: 'NO_MORE' })
-      } else {
-        dispatch({ type: 'FETCH_MORE_SUCCESS', payload: newPokemons })
-      }
-    } catch (err) {
-      dispatch({ type: 'FETCH_MORE_ERROR', payload: err as Error })
-    }
-  }, [fetchMore, state.currentOffset])
-
-  // Dispara fetchMore cuando el sentinel está en vista
-  const { ref, inView } = useInView({ threshold: 0, triggerOnce: false })
-
-  useEffect(() => {
-    if (inView && !state.loadingMore && state.hasMore) {
-      handleFetchMore()
-    }
-  }, [inView, state.loadingMore, state.hasMore, handleFetchMore])
-
+  /**
+   * Retorna el estado actual de los datos, el estado de carga, los errores
+   * y la referencia para el observador.
+   */
   return {
-    pokemons: state.pokemons,
-    loadingMore: state.loadingMore,
-    hasMore: state.hasMore,
-    fetchMoreError: state.fetchMoreError,
-    ref,
+    pokemons, // Lista actual de Pokémon.
+    loadingMore, // Indica si se está cargando más datos.
+    hasMore, // Indica si hay más datos disponibles para cargar.
+    fetchMoreError, // Error ocurrido durante la carga de más datos.
+    ref, // Referencia para el elemento observado.
   }
 }

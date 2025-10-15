@@ -1,5 +1,7 @@
 'use client'
 
+import * as React from 'react'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -8,7 +10,7 @@ import { useSeen } from 'src/state/use-seen'
 import EyeNavbarIcon from '../icons/eye-navbar'
 import { Button } from '../ui/button'
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
   const { seenList } = useSeen()
   const countPokemons = seenList.length
   const pathname = usePathname()
@@ -41,3 +43,4 @@ export default function Navbar() {
     </nav>
   )
 }
+export default Navbar

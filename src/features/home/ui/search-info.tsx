@@ -1,27 +1,29 @@
+import React from 'react'
+
+import { NOT_FOUND_POKEMONS } from '../constants'
+
 interface SearchInfoProps {
   search: string
   pokemonsCount: number
 }
 
-const NOT_POKEMONS = 0
-
-export default function SearchInfo({ search, pokemonsCount }: SearchInfoProps) {
-  const POKEMONS_COUNT = pokemonsCount
+const SearchInfo: React.FC<SearchInfoProps> = ({ search, pokemonsCount }) => {
   if (!search) {
     return (
       <h3 className="font-poppins text-sm font-normal tracking-normal text-primary">
-        Showing {POKEMONS_COUNT} Pokémons
+        Showing {pokemonsCount} Pokémons
       </h3>
     )
   }
-  if (search && POKEMONS_COUNT === NOT_POKEMONS) {
+  if (search && pokemonsCount === NOT_FOUND_POKEMONS) {
     return (
       <p className="text-red-500">No Pokémon found for &quot;{search}&quot;</p>
     )
   }
   return (
     <h3 className="font-poppins text-sm font-normal tracking-normal text-primary">
-      Found {POKEMONS_COUNT} Pokémons matching &quot;{search}&quot;
+      Found {pokemonsCount} Pokémons matching &quot;{search}&quot;
     </h3>
   )
 }
+export default SearchInfo

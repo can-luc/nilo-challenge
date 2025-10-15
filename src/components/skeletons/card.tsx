@@ -1,4 +1,5 @@
-export default function SkeletonCard() {
+import React from 'react'
+const SkeletonCard: React.FC = () => {
   return (
     <div className="relative w-full animate-pulse overflow-hidden rounded bg-white shadow-lg">
       {/* Top Section */}
@@ -25,3 +26,4 @@ export default function SkeletonCard() {
     </div>
   )
 }
+export default SkeletonCard

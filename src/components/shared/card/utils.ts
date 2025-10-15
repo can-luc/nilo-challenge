@@ -1,4 +1,4 @@
-import { BadgeColor } from 'src/components/ui/badge'
+import { BadgeColor } from 'src/components/ui/badge/types'
 
 import { typeColors } from './types/card'
 

@@ -1,3 +1,5 @@
+import React from 'react'
+
 import EyeClosedIcon from '../../../icons/eye-closed'
 import EyeOpenIcon from '../../../icons/eye-open'
 
@@ -5,7 +7,7 @@ interface ToogleProps {
   seen?: boolean
   onClick?: () => void
 }
-export default function Toogle({ seen = false, onClick }: ToogleProps) {
+const Toogle: React.FC<ToogleProps> = ({ seen = false, onClick }) => {
   return (
     <div
       className="absolute right-4 top-4"
@@ -24,3 +26,4 @@ export default function Toogle({ seen = false, onClick }: ToogleProps) {
     </div>
   )
 }
+export default Toogle

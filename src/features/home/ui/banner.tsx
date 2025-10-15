@@ -1,11 +1,12 @@
+import React from 'react'
+
 import IconCheck from 'src/components/icons/check'
 
 interface BannerProps {
   message: string
   show?: boolean
 }
-
-export default function Banner({ message, show }: BannerProps) {
+const Banner: React.FC<BannerProps> = ({ message, show = false }) => {
   return (
     <div className="fixed left-0 top-24 z-50 flex w-full justify-center px-2">
       <div
@@ -18,3 +19,4 @@ export default function Banner({ message, show }: BannerProps) {
     </div>
   )
 }
+export default Banner
