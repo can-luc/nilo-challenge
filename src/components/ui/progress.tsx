@@ -17,10 +17,7 @@ const Progress: React.FC<ProgressProps> = ({ label, value }) => {
       </div>
       {value > NOT_VALUE_CATEGORIES && (
         <div className="h-1.5 w-full rounded-full bg-card-progress-container">
-          <div
-            className="h-1.5 rounded-full bg-card-progress-bar transition-all duration-300"
-            style={{ width: `${value}%` }}
-          />
+          <div className="h-1.5 rounded-full bg-card-progress-bar transition-all duration-300" />
         </div>
       )}
     </div>

@@ -22,7 +22,7 @@ export function useDebouncedFilter<T extends object>(
   const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
-    if (searchInput === '') {
+    if (searchInput === '' || searchInput.length < 3) {
       setSearch('')
       setIsTyping(false)
       return

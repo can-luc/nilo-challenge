@@ -7,10 +7,10 @@ import Hero from 'src/components/shared/hero/hero'
 import SkeletonContainer from 'src/components/skeletons/container'
 import { Button } from 'src/components/ui/button'
 
-import { useSeen } from 'src/state/use-seen'
+import { useSeenList } from 'src/state/use-seen-list'
 
 import ErrorState from '../../../components/error-state'
-import CardGrid from '../../../components/shared/card/ui/card-grid'
+import CardGridAllSeen from '../../../components/shared/card/ui/card-grid-all-seen'
 import { NOT_FOUND_SEEN } from '../constants'
 import { useClearSeenWithSkeleton } from '../hooks/use-clear-seen'
 import { formatTitleAndSubtitle } from '../utils'
@@ -18,7 +18,7 @@ import { formatTitleAndSubtitle } from '../utils'
 import { BackButton } from './back-button'
 
 const ContainerSeen: React.FC = () => {
-  const { seenList } = useSeen()
+  const seenList = useSeenList()
 
   const { title, subtitle } = formatTitleAndSubtitle(seenList.length)
   const { showSkeleton, handleClearSeen } = useClearSeenWithSkeleton()
@@ -52,7 +52,7 @@ const ContainerSeen: React.FC = () => {
           Clear All Seen Pokémon
         </Button>
       </div>
-      <CardGrid pokemons={seenList} seenList={[]} allSeen={true} />
+      <CardGridAllSeen pokemons={seenList} />
     </>
   )
 }

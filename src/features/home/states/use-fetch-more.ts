@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { useIntersectionObserver } from '../hooks/use-Intersection-observer'
 import { usePokemonPagination } from '../hooks/use-pokemon-pagination'
@@ -27,25 +27,25 @@ export function useFetchMore(initialData: PokemonsList): FetchMoreResult {
   // Usa el hook de Intersection Observer para detectar cuando el usuario llega al final de la lista.
   const { ref, inView } = useIntersectionObserver()
 
-  /**
-   * Efecto para cargar más datos cuando el elemento observado está en vista,
-   * no hay una carga en progreso y aún hay más datos disponibles.
-   */
+  // Evita dobles llamadas cuando el sentinel permanece en vista al terminar una carga
+  const hasTriggeredRef = useRef(false)
+
   useEffect(() => {
-    if (inView && !loadingMore && hasMore) {
-      fetchMore() // Llama a la función para cargar más datos.
+    if (!inView) {
+      hasTriggeredRef.current = false
+      return
+    }
+    if (inView && !loadingMore && hasMore && !hasTriggeredRef.current) {
+      hasTriggeredRef.current = true
+      fetchMore()
     }
   }, [inView, loadingMore, hasMore, fetchMore])
 
-  /**
-   * Retorna el estado actual de los datos, el estado de carga, los errores
-   * y la referencia para el observador.
-   */
   return {
-    pokemons, // Lista actual de Pokémon.
-    loadingMore, // Indica si se está cargando más datos.
-    hasMore, // Indica si hay más datos disponibles para cargar.
-    fetchMoreError, // Error ocurrido durante la carga de más datos.
-    ref, // Referencia para el elemento observado.
+    pokemons,
+    loadingMore,
+    hasMore,
+    fetchMoreError,
+    ref,
   }
 }

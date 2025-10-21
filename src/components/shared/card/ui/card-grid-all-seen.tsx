@@ -1,33 +1,25 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import dynamic from 'next/dynamic'
 
 import SkeletonCard from 'src/components/skeletons/card'
 
-import { useSeenList } from 'src/state/use-seen-list'
 import { Pokemon } from 'src/types/pokemon'
-
-//const Card = lazy(() => import('./card'))
 
 const Card = dynamic(() => import('./card'), {
   loading: () => <SkeletonCard />,
   ssr: true,
 })
 
-interface CardGridProps {
+interface CardGridAllSeenProps {
   pokemons: Pokemon[]
-  allSeen?: boolean
 }
 
-const CardGrid: React.FC<CardGridProps> = ({ pokemons, allSeen = false }) => {
-  const seenList = useSeenList()
-  const seenIds = useMemo(() => new Set(seenList.map((p) => p.id)), [seenList])
-
+const CardGridAllSeen: React.FC<CardGridAllSeenProps> = ({ pokemons }) => {
   return (
     <div className="grid grid-cols-1 gap-3 pt-6 md:grid-cols-2 md:gap-1.5 lg:grid-cols-3 lg:gap-8">
       {pokemons.map((pokemon, index) => {
         const { key, num, species, sprite, baseStats, types } = pokemon
-
         const formattedId = (key as string) ?? String(num)
         return (
           <Card
@@ -37,7 +29,7 @@ const CardGrid: React.FC<CardGridProps> = ({ pokemons, allSeen = false }) => {
             sprite={sprite}
             baseStats={baseStats}
             types={types}
-            seen={allSeen ? true : seenIds.has(formattedId)}
+            seen={true}
             priority={index < 6}
             key={formattedId}
           />
@@ -46,4 +38,5 @@ const CardGrid: React.FC<CardGridProps> = ({ pokemons, allSeen = false }) => {
     </div>
   )
 }
-export default CardGrid
+export default CardGridAllSeen
+

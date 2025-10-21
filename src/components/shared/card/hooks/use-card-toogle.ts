@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useSeen } from 'src/state/use-seen'
+import { useSeenActions } from 'src/state/use-seen-actions'
 
 import { CardProps } from '../ui/card'
 
@@ -13,7 +13,7 @@ export function useCardToggle({
   baseStats,
   seen,
 }: CardProps): () => void {
-  const { addSeen, removeSeen } = useSeen()
+  const { addSeen, removeSeen } = useSeenActions()
 
   const handleToggle = useCallback(() => {
     if (seen) {

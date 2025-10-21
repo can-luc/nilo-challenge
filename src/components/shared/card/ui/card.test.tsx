@@ -1,7 +1,6 @@
 // import { render, screen } from '@testing-library/react'
 // import { expect, test, vi } from 'vitest'
 
-// import { SeenProvider } from 'src/providers/seen-provider'
 
 // import Card from './card'
 
@@ -15,10 +14,6 @@
 //     baseStats: { hp: 35, attack: 55, defense: 40, gen: 1 },
 //     seen: true,
 //   }
-//   render(
-//     <SeenProvider>
-//       <Card {...mockProps} />
-//     </SeenProvider>,
-//   )
+//   render(<Card {...mockProps} />)
 //   expect(screen.getByText('Pikachu')).toBeInTheDocument()
 // })

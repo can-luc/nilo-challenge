@@ -27,4 +27,5 @@ const Search: React.FC<SearchProps> = ({ value, onChange }) => {
     </>
   )
 }
-export default Search
+
+export default React.memo(Search)

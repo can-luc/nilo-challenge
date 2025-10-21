@@ -9,6 +9,7 @@ interface CardImageProps {
   alt: string
   imgError: boolean | undefined
   setImgError: (v: boolean) => void
+  priority?: boolean
 }
 
 const CardImage: React.FC<CardImageProps> = ({
@@ -16,6 +17,7 @@ const CardImage: React.FC<CardImageProps> = ({
   alt,
   imgError,
   setImgError,
+  priority = false,
 }) => {
   const handleError = () => setImgError(true)
   return (
@@ -24,13 +26,12 @@ const CardImage: React.FC<CardImageProps> = ({
         <Image
           src={sprite}
           alt={alt}
-          // width={124}
-          // height={124}
-          layout="fill"
-          objectFit="contain"
-          //style={{ height: 'auto' }}
+          // Prefer modern fill API to avoid layout shifts
+          fill
+          sizes="(max-width: 768px) 128px, (max-width: 1200px) 160px, 200px"
+          style={{ objectFit: 'contain' }}
           onError={handleError}
-          priority
+          priority={priority}
         />
       ) : (
         <NotFoundImagen />

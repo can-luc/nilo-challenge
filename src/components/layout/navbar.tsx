@@ -2,23 +2,28 @@
 
 import * as React from 'react'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-
-import { useSeen } from 'src/state/use-seen'
-
-import EyeNavbarIcon from '../icons/eye-navbar'
-import { Button } from '../ui/button'
+import ButtonNavbar from '../button-navbar/button-navbar'
 
 const Navbar: React.FC = () => {
-  const { seenList } = useSeen()
-  const countPokemons = seenList.length
-  const pathname = usePathname()
+  const [scrolled, setScrolled] = React.useState(false)
+
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <nav className="xl:h-28 fixed left-0 top-0 z-40 h-[112px] w-screen bg-navbar-background shadow-navbar">
-      <div className="sm:px-6 h-26 sm:h-20 container mx-auto flex items-center justify-between px-4 md:px-10 lg:h-24 lg:px-52">
-        <div className="pb-10 pt-6 md:pt-[34px]">
+    <nav
+      className={`fixed left-0 top-0 z-40 h-[124px] w-screen rounded-b-xl bg-navbar-background ${
+        scrolled
+          ? 'shadow-[0_8px_20px_rgba(15,23,42,0.12)]'
+          : 'shadow-navbar'
+      }`}
+    >
+      <div className="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 md:px-10 lg:px-52">
+        <div>
           <div className="flex flex-col space-y-[2px]">
             <h1 className="inline-block bg-gradient-to-r from-[#275FBB] to-[#932482] bg-clip-text font-poppins text-2xl font-semibold leading-[1.5] tracking-normal text-transparent">
               PokeDex
@@ -29,18 +34,15 @@ const Navbar: React.FC = () => {
             </span>
           </div>
         </div>
-        <div className="py-11 pr-2">
-          {pathname !== '/seen' && (
-            <Link href="/seen" className="text-link font-poppins text-sm">
-              <Button color="primary" size="s">
-                <EyeNavbarIcon />
-                Seen ({countPokemons})
-              </Button>
-            </Link>
-          )}
-        </div>
+        <ButtonNavbar />
+        {/* Bottom fade overlay to emphasize separation on scroll */}
+        <div
+          className={`pointer-events-none absolute left-0 right-0 -bottom-3 h-6 rounded-b-xl bg-gradient-to-b from-[#0F172A]/10 to-transparent transition-opacity duration-300 ${
+            scrolled ? 'opacity-0' : 'opacity-0'
+          }`}
+        />
       </div>
     </nav>
   )
 }
-export default Navbar
+export default React.memo(Navbar)

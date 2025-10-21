@@ -30,3 +30,22 @@ export const GET_POKEMON_DETAILS = gql`
     }
   }
 `
+
+export const GET_FUZZY_POKEMON = gql`
+  query getFuzzyPokemon($pokemon: String!, $take: Int) {
+    getFuzzyPokemon(pokemon: $pokemon, take: $take) {
+      key
+      num
+      species
+      sprite
+      baseStats {
+        hp
+        attack
+        defense
+      }
+      types {
+        name
+      }
+    }
+  }
+`

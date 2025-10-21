@@ -7,8 +7,9 @@ import Navbar from 'src/components/layout/navbar'
 // Import global CSS styles
 import 'src/styles/globals.css'
 
+import WdyrClient from 'src/debug/wdyr-client'
 import ApolloWrapper from 'src/providers/apollo-provider'
-import { SeenProvider } from 'src/providers/seen-provider'
+import SeenStoreInit from 'src/providers/seen-store-init'
 
 export const metadata = {
   title: 'Pokemon App',
@@ -34,13 +35,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="preload" href="../styles/globals.css" as="style" />
       </head>
       <body className="min-h-screen bg-body-background">
+        {/* Dev-only re-render instrumentation (no-op in prod) */}
+        <WdyrClient />
         <ApolloWrapper>
-          <SeenProvider>
-            <Navbar />
-            <main className="relative mt-[112px] flex min-h-screen flex-col items-center rounded-xl bg-gradient-to-r from-layout-page to-slate-100 p-2 shadow-2xl">
-              {children}
-            </main>
-          </SeenProvider>
+          <SeenStoreInit />
+
+          <Navbar />
+          <main className="relative mt-[124px] flex min-h-screen flex-col items-center rounded-t-xl bg-gradient-to-r from-layout-page to-slate-100 p-2 shadow-2xl">
+            {children}
+          </main>
         </ApolloWrapper>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </body>
