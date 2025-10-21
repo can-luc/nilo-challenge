@@ -11,8 +11,5 @@ export interface SeenActions {
 
 export function useSeenActions(): SeenActions {
   // Stable reference to action functions
-  return useMemo(
-    () => ({ addSeen, removeSeen, clearSeen, clearLastAdded }),
-    [],
-  )
+  return useMemo(() => ({ addSeen, removeSeen, clearSeen, clearLastAdded }), [])
 }

@@ -32,4 +32,3 @@ export function clearSeen() {
 export function clearLastAdded() {
   seenLastAddedVar(null)
 }
-
